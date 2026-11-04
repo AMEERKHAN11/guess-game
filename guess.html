@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<head>
+    <title>Guessing the Number</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+ <h1 class="title">Guessing the Number</h1>
+    <hr class="Title_line">
+    <div class="main-container">
+    
+    <!-- Left Side: The Circle Game Area -->
+<div class="circle-area">
+    <h2>Game Area</h2>
+    
+    <!-- NEW: The 3 Lives Container -->
+    <div id="hearts-container">
+        <span class="heart">❤️</span>
+        <span class="heart">❤️</span>
+        <span class="heart">❤️</span>
+    </div>
+
+    <input class="guess-input" id="1" type="number" placeholder="Enter your guess (1-10)" min="1" max="10">
+    <button class="guess-button" onclick="checkGuess()">Guess</button>
+</div>
+ <!-- Right Side: The Square Instructions -->
+<div class="square-area">
+    <h2>Instructions</h2>
+    <ul class="game-rules">
+        <li><strong>The Goal:</strong> I have picked a secret number between 1 and 10.</li>
+        <li><strong>The Challenge:</strong> You have exactly 3 lives (❤️) to find it.</li>
+        <li><strong>How to Play:</strong> Type your number and hit <strong>Enter</strong> or click Guess!</li>
+    </ul>
+</div>
+
+<!-- The Custom Popup Box (Hidden until triggered) -->
+<div id="result-modal">
+    <div id="modal-box" class="modal-content">
+        <h2 id="modal-title">Result</h2>
+        <p id="modal-message">Message goes here</p>
+        <button class="close-btn" onclick="closeModal()">Play Again</button>
+    </div>
+</div>
+<script> 
+let random = Math.floor(Math.random() * 10) + 1;
+let lives = 3; // Start with 3 lives!
+
+function checkGuess() {
+    let guess = document.getElementById("1");
+    let a = guess.value;
+    
+    let modal = document.getElementById("result-modal");
+    let modalBox = document.getElementById("modal-box");
+    let title = document.getElementById("modal-title");
+    let message = document.getElementById("modal-message");
+    let hearts = document.getElementsByClassName("heart"); // Grabs the 3 hearts
+    
+    if (a <= 10 && a >= 1) {
+        
+        if (a == random) {
+            // WIN STATE: They guessed it before lives ran out!
+            modal.style.display = "flex"; 
+            modalBox.className = "modal-content modal-win";
+            title.innerText = "🎉 Adipookutti! 🎉";
+            message.innerText = "Congratulations! The secret number was indeed " + random + "!";
+        } else {
+            // WRONG GUESS
+            lives--; // Deduct 1 life
+            
+            // Update the UI: Turn the current heart grey and change the emoji
+            hearts[lives].classList.add("lost-heart");
+            hearts[lives].innerText = "🤍"; 
+            
+            if (lives === 0) {
+                // GAME OVER: They ran out of lives
+                modal.style.display = "flex"; 
+                modalBox.className = "modal-content modal-lose";
+                title.innerText = "Game Over...";
+                message.innerText = "You ran out of lives! The secret number was " + random + ".";
+            } else {
+                // Not game over yet, just clear the box so they can type again quickly
+                guess.value = "";
+                guess.placeholder = "Wrong! " + lives + " lives left...";
+            }
+        }
+        
+    } else { 
+        alert("Invalid number! Please read the instructions.");
+    }
+}
+
+// Reset everything when they click "Play Again"
+function closeModal() {
+    document.getElementById("result-modal").style.display = "none";
+    random = Math.floor(Math.random() * 10) + 1; // New secret number
+    
+    let guess = document.getElementById("1");
+    guess.value = ""; // Clear the box
+    guess.placeholder = "Enter your guess (1-10)"; // Reset the text
+    
+    // Restore all 3 lives and make the hearts red again
+    lives = 3;
+    let hearts = document.getElementsByClassName("heart");
+    for (let i = 0; i < hearts.length; i++) {
+        hearts[i].classList.remove("lost-heart");
+        hearts[i].innerText = "❤️"; 
+    }
+}
+
+// 1. Grab the input box using its ID
+let guessInputBox = document.getElementById("1");
+
+// 2.  for any key presses inside that box
+guessInputBox.addEventListener("keydown", function(event) {
+    
+    // 3. Check if the exact key that was pressed is the "Enter" key
+    if (event.key === "Enter") {
+        
+        // 4. Run game logic, just like clicking the button!
+        checkGuess();
+    }
+});
+</script>
+
+<!-- Developer Signature -->
+<p class="developer-signature">Created by Ameer Khan</p>
+
+    
+</body>
+</html>

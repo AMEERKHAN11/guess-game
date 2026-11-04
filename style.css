@@ -1,0 +1,301 @@
+body {
+    /* Soft pastel gradient background */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Fredoka', cursive, sans-serif;
+    border: 6px dashed #ffc8dd; /* Soft pink dashed border */
+    box-sizing: border-box;
+}
+
+.title {
+    text-align: center;
+    font-size: 56px;
+    font-weight: 700;
+    color: #4a154b; /* Deep plum purple for crisp contrast */
+    letter-spacing: 1.5px;
+    margin-top: 40px;
+    margin-bottom: 15px;
+
+    /* Subtle 3D text shadow for a pillowy bubble effect */
+    text-shadow: 2px 3px 0px #ffd1dc, 4px 6px 0px rgba(0, 0, 0, 0.05);
+
+    /* Floating bubble animation */
+    display: inline-block;
+    width: 100%;
+    animation: bubbleBounce 2.5s ease-in-out infinite alternate;
+}
+
+/* Cute rounded divider */
+.Title_line {
+    border: none;
+    height: 8px;
+    width: 120px;
+    background: #ff6b81; /* Candy coral/pink */
+    border-radius: 999px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(255, 107, 129, 0.35);
+}
+
+/* The bouncing float animation */
+@keyframes bubbleBounce {
+    0% {
+        transform: translateY(0px) rotate(-0.5deg);
+    }
+    100% {
+        transform: translateY(-8px) rotate(0.5deg);
+    }
+}
+/* 1. The Wrapper: This puts them side-by-side */
+.main-container {
+    display: flex;
+    justify-content: center; /* Centers everything horizontally */
+    align-items: center; /* Aligns them vertically so they match up */
+    gap: 15%; /* Creates clean space between the circle and square */
+    margin-top: 70px;
+}
+
+/* 2. The Circle */
+.circle-area {
+    width: 320px;
+    height: 320px;
+    background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
+    border-radius: 50%; /* The magic line that turns a square into a circle */
+    
+    /* Centers the text perfectly inside the circle */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 70px;
+    gap: 15px; /* Adds space between the h2 and other tags */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    color: #4a154b;
+}
+
+/* 3. The Square */
+.square-area {
+    width: 400px;
+    height: 320px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 24px; /* Slightly rounded corners fit the cute theme better than sharp edges */
+    padding: 30px;
+    box-sizing: border-box; /* Keeps padding from expanding the box size */
+    
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    color: #4a154b;
+    margin-top: 70px;
+}
+
+/* Fix the h2 tags inside the boxes so they look clean */
+/* Styling the Input Box */
+.guess-input {
+    width: 220px; /* Increased from 140px to fit your placeholder text */
+    padding: 12px 20px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    border: 3px solid #ffc8dd;
+    border-radius: 999px;
+    outline: none;
+    background-color: white;
+    color: #4a154b;
+}
+
+
+
+
+/* Make the input border change color when you click on it */
+.guess-input:focus {
+    border-color: #ff6b81; 
+}
+
+/* Styling the Guess Button */
+.guess-button {
+    padding: 12px 30px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    background-color: #ff6b81; /* Candy coral/pink */
+    border: none;
+    border-radius: 999px; /* Pill shape */
+    cursor: pointer; /* Turns the mouse into a pointing hand */
+    box-shadow: 0 4px 10px rgba(255, 107, 129, 0.4);
+    transition: transform 0.2s; /* Makes the button press smooth */
+}
+
+/* Adds a cute "push down" effect when you click the button */
+.guess-button:active {
+    transform: scale(0.95);
+}
+/* The dark transparent background that covers the whole screen */
+#result-modal {
+    display: none; /* Keeps it perfectly hidden when the game starts */
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Forces it to sit on top of everything else */
+}
+
+/* Base rules for the box */
+.modal-content {
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    width: 320px;
+    transition: transform 0.3s; /* Makes it pop open smoothly */
+}
+
+/* 🌟 The Beautiful Winning Box */
+.modal-win {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    border: 5px solid #ff6b81;
+    color: #4a154b;
+    box-shadow: 0 0 30px rgba(255, 107, 129, 0.6);
+    transform: scale(1.1); /* Makes the winning box feel huge and exciting */
+}
+
+/* 🌧️ The Reduced Quality Losing Box */
+.modal-lose {
+    background-color: #e9ecef;
+    border: 2px solid #adb5bd;
+    color: #6c757d;
+    box-shadow: none;
+    transform: scale(0.9); /* Shrinks it down so it feels less important */
+}
+
+/* The Play Again Button inside the popup */
+.close-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    background-color: #4a154b;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+/* Styling the hearts */
+#hearts-container {
+    font-size: 24px;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 8px;
+}
+
+.heart {
+    transition: all 0.3s ease; /* Makes the heart breaking animation smooth */
+}
+
+/* The style applied when a player loses a life */
+.lost-heart {
+    opacity: 0.3; /* Fades the heart */
+    filter: grayscale(100%); /* Turns it grey */
+    transform: scale(0.8); /* Shrinks it slightly */
+}
+
+/* 2. The Circle */
+.circle-area {
+    width: 320px;
+    height: 320px;
+    background-color: rgba(255, 235, 245, 0.7); /* Soft pink-tinted frosted glass */
+    border-radius: 50%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    color: #4a154b;
+    
+    /* NEW: Tells the browser to make the hover animation smooth over 0.3 seconds */
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Circle Hover State */
+.circle-area:hover {
+    transform: translateY(-15px); /* Pushes the circle 15 pixels UP */
+    background-color: #ffd1dc; /* Turns into a solid, vibrant pastel pink */
+    box-shadow: 0 15px 25px rgba(255, 107, 129, 0.3); /* Makes the shadow bigger so it looks like it's floating high */
+}
+
+/* 3. The Square */
+.square-area {
+    width: 400px;
+    height: 320px;
+    background-color: rgba(225, 240, 255, 0.7); /* Soft blue-tinted frosted glass */
+    border-radius: 24px; 
+    padding: 30px;
+    box-sizing: border-box; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    color: #4a154b;
+    
+    /* NEW: Smooth animation */
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Square Hover State */
+.square-area:hover {
+    transform: translateY(-15px); /* Pushes the square UP */
+    background-color: #bde0fe; /* Turns into a solid, vibrant baby blue */
+    box-shadow: 0 15px 25px rgba(100, 150, 255, 0.3); /* Floating shadow */
+}
+
+/* Automatically stack the game for mobile screens */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column; /* Turns your side-by-side layout into a stack */
+        gap: 30px; /* Adds clean spacing between the circle and square */
+    }
+}
+/* Signature Base */
+.developer-signature {
+    text-align: center;
+    font-family: 'Fredoka', cursive, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a154b;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    opacity: 0.85;
+    cursor: pointer; /* Turns the mouse into a pointing hand */
+    
+    /* Makes the glow fade in smoothly */
+    transition: all 0.3s ease; 
+}
+
+/* Signature Glow on Hover */
+.developer-signature:hover {
+    opacity: 1;
+    color: #ff6b81; /* Shifts to your bright pink accent color */
+    transform: scale(1.05); /* Makes the text pop out slightly */
+    
+    /* This creates the glowing light effect around the letters */
+    text-shadow: 0 0 10px rgba(255, 107, 129, 0.8), 
+                 0 0 20px rgba(255, 107, 129, 0.4); 
+}
+
+/*for mobile */
+.circle-area:active {
+    transform: translateY(-8px);
+    background-color: #ffd1dc;
+    box-shadow: 0 15px 25px rgba(255, 107, 129, 0.3);
+.square-area:active {
+    transform: translateY(-8px);
+    background-color: #bde0fe;
+    box-shadow: 0 15px 25px rgba(100, 150, 255, 0.3);
+
+.developer-signature:active {
+    opacity: 1;
+    color: #ff6b81; 
+    transform: scale(1.05); 
+    text-shadow: 0 0 10px rgba(255, 107, 129, 0.8), 0 0 20px rgba(255, 107, 129, 0.4); 
+}
